@@ -5,6 +5,7 @@
 
     {{ payment_props|json_script:"payment-props" }}
 
+    <script>window.PAYMENT_CHECK_URL = "{{ payment_check_url }}";</script>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>(function() {
         const IMP = window.IMP;
@@ -15,8 +16,7 @@
         const props = JSON.parse(json_string);
 
         IMP.request_pay(props, function(response) {
-            // 콜백함수
-            console.log(response);
+            location.href = window.PAYMENT_CHECK_URL;
         });
     })();
     </script>
