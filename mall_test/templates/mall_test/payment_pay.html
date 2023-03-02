@@ -1,0 +1,24 @@
+{% extends "mall_test/base.html" %}
+
+{% block content %}
+    <h2>결제하기</h2>
+
+    {{ payment_props|json_script:"payment-props" }}
+
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script>(function() {
+        const IMP = window.IMP;
+        const code = "iamport";
+        IMP.init(code);
+
+        const json_string = document.querySelector("#payment-props").textContent;
+        const props = JSON.parse(json_string);
+
+        IMP.request_pay(props, function(response) {
+            // 콜백함수
+            console.log(response);
+        });
+    })();
+    </script>
+
+{% endblock %}
