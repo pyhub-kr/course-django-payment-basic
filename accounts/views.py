@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -21,8 +21,9 @@ login = LoginView.as_view(
 )
 
 
-def logout(request):
-    pass
+logout = LogoutView.as_view(
+    next_page="login",
+)
 
 
 def profile(request):
