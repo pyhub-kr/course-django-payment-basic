@@ -1,6 +1,7 @@
 django==4.1.7
 django-bootstrap5==22.2
 django-environ==0.9.0
+iamport-rest-client==0.9.0
 
 django-debug-toolbar==3.8.1
 

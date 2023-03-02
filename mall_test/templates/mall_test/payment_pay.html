@@ -9,7 +9,7 @@
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>(function() {
         const IMP = window.IMP;
-        const code = "iamport";
+        const code = "{{ portone_shop_id }}";
         IMP.init(code);
 
         const json_string = document.querySelector("#payment-props").textContent;
