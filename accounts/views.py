@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -26,5 +27,6 @@ logout = LogoutView.as_view(
 )
 
 
+@login_required
 def profile(request):
-    pass
+    return render(request, "accounts/profile.html")
