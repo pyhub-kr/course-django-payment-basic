@@ -21,21 +21,21 @@
                 </a>
 
                 <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active" aria-current="page">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">FAQs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">About</a>
-                    </li>
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav-link">로그인</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'signup' %}" class="nav-link">회원가입</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'profile' %}" class="nav-link">프로필</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link">로그아웃</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </header>
         </div>
