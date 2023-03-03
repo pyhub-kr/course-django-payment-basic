@@ -32,6 +32,8 @@ class Product(models.Model):
     photo = models.ImageField(
         upload_to="mall/product/photo/%Y/%m/%d",
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"<{self.pk}> {self.name}"
