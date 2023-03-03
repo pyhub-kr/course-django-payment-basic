@@ -88,4 +88,6 @@ def add_to_cart(request, product_pk):
 
     messages.success(request, "장바구니에 추가했습니다.")
 
-    return redirect("product_list")
+    redirect_url = request.META.get("HTTP_REFERER", "product_list")
+
+    return redirect(redirect_url)
