@@ -71,15 +71,13 @@
                             </ul>
                         </div>
                     {% endif %}
- 
-
-
-
                 </div>
             </div>
         </header>
 
         <div class="container">
+            {% bootstrap_messages %}
+
             {% block content %}{% endblock %}
 
             <hr />
