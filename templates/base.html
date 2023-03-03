@@ -16,29 +16,25 @@
         <header class="p-3 mb-3 border-bottom">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="/"
+                    <a href="{% url 'root' %}"
                        class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">장고 쇼핑몰</a>
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>
-                            <a href="#" class="nav-link px-2 link-secondary">Overview</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-2 link-dark">Inventory</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-2 link-dark">Customers</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-2 link-dark">Products</a>
+                            <a href="{% url 'product_list' %}" class="nav-link px-2 link-secondary">Mall</a>
                         </li>
                     </ul>
 
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+                          role="search"
+                          action=""
+                          method="get">
                         <input type="search"
                                class="form-control"
                                placeholder="Search..."
-                               aria-label="Search">
+                               aria-label="Search"
+                               name="query"
+                               value="{{ request.GET.query }}">
                     </form>
 
                     {% if not user.is_authenticated %}
