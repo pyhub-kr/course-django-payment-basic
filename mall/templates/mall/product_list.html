@@ -23,7 +23,8 @@
                         <div class="d-flex justify-content-between">
                             <div>{{ product.price|intcomma }}원</div>
                             <div>
-                                <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-primary">장바구니에 담기</a>
+                                <a href="{% url 'add_to_cart' product.pk %}"
+                                   class="btn btn-primary cart-button">장바구니에 담기</a>
                             </div>
                         </div>
                     </div>
@@ -34,4 +35,29 @@
 
     <div class="mt-3 mb-3">{% bootstrap_pagination page_obj url=request.get_full_path %}</div>
 
+{% endblock %}
+
+{% block extra-script %}
+    <script>window.csrf_token = "{{ csrf_token }}";</script>
+    <script>
+        document.querySelectorAll(".cart-button").forEach(function(button) {
+            button.addEventListener("click", function(e) {
+                e.preventDefault();
+                const url = e.target.href;
+
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": window.csrf_token,
+                    }
+                }).then(function(response) {
+                    return response.status === 200 ? response.text() : Promise.reject(response)
+                }).then(function() {
+                    alert("장바구니에 담았습니다.");
+                }).catch(function() {
+                    alert("장바구니에 담는데 실패했습니다.");
+                });
+            });
+        });
+    </script>
 {% endblock %}
