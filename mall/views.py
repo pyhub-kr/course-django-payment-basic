@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
 from mall.forms import CartProductForm
-from mall.models import Product, CartProduct
+from mall.models import Product, CartProduct, Order
 
 
 class ProductListView(ListView):
@@ -95,3 +95,20 @@ def add_to_cart(request, product_pk):
     # return redirect(redirect_url)
 
     return HttpResponse("ok")
+
+
+@login_required
+def order_new(request):
+    cart_product_qs = CartProduct.objects.filter(user=request.user)
+
+    order = Order.create_from_cart(request.user, cart_product_qs)
+    cart_product_qs.delete()
+
+    return redirect("order_pay", order.pk)
+
+
+@login_required
+def order_pay(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    messages.warning(request, "구현 예정")
+    return render(request, "mall/order_pay.html", {"order": order})
