@@ -4,6 +4,7 @@ django-environ==0.9.0
 iamport-rest-client==0.9.0
 pillow==9.4.0
 requests==2.28.2
+sorl-thumbnail==12.9.0
 
 django-debug-toolbar==3.8.1
 
