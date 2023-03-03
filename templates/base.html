@@ -1,4 +1,5 @@
 {% load django_bootstrap5 %}
+{% load static %}
 
 <!doctype html>
 <html lang="ko">
@@ -87,6 +88,8 @@
             &copy; 2023. All rights reserved.
         </div>
 
+        <script>window.csrf_token = "{{ csrf_token }}";</script>
+        <script src="{% static "utils/alert-modal.js" %}"></script>
         {% block extra-script %}{% endblock %}
     </body>
 </html>
