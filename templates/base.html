@@ -13,32 +13,75 @@
     </head>
     <body>
 
-        <div class="container">
-            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="/"
-                   class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <span class="fs-4">장고 쇼핑몰</span>
-                </a>
+        <header class="p-3 mb-3 border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/"
+                       class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">장고 쇼핑몰</a>
 
-                <ul class="nav nav-pills">
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li>
+                            <a href="#" class="nav-link px-2 link-secondary">Overview</a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link px-2 link-dark">Inventory</a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link px-2 link-dark">Customers</a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link px-2 link-dark">Products</a>
+                        </li>
+                    </ul>
+
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                        <input type="search"
+                               class="form-control"
+                               placeholder="Search..."
+                               aria-label="Search">
+                    </form>
+
                     {% if not user.is_authenticated %}
-                        <li class="nav-item">
-                            <a href="{% url 'login' %}" class="nav-link">로그인</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'signup' %}" class="nav-link">회원가입</a>
-                        </li>
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a href="{% url 'login' %}" class="nav-link link-dark px-2">로그인</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'signup' %}" class="nav-link link-dark px-2">회원가입</a>
+                            </li>
+                        </ul>
                     {% else %}
-                        <li class="nav-item">
-                            <a href="{% url 'profile' %}" class="nav-link">프로필</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'logout' %}" class="nav-link">로그아웃</a>
-                        </li>
+                        <div class="dropdown text-end">
+                            <a href="#"
+                               class="d-block link-dark text-decoration-none dropdown-toggle"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="https://github.com/mdo.png"
+                                     alt="mdo"
+                                     width="32"
+                                     height="32"
+                                     class="rounded-circle">
+                            </a>
+                            <ul class="dropdown-menu text-small" style="">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'profile' %}">프로필</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">로그아웃</a>
+                                </li>
+                            </ul>
+                        </div>
                     {% endif %}
-                </ul>
-            </header>
-        </div>
+ 
+
+
+
+                </div>
+            </div>
+        </header>
 
         <div class="container">
             {% block content %}{% endblock %}
