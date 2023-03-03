@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_bootstrap5",
     "sorl.thumbnail",
+    "widget_tweaks",
     # local apps
     "accounts",
     "mall",

@@ -1,12 +1,19 @@
 {% extends "mall/base.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
     <h2>장바구니</h2>
 
     <form action="" method="post" novalidate>
-        <table>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>상품명</th>
+                    <th>수량</th>
+                    <th>삭제여부</th>
+                </tr>
+            </thead>
             <tbody>
-
                 {% csrf_token %}
                 {{ formset.management_form }}
                 {% for form in formset %}
@@ -16,10 +23,10 @@
                             <td>{{ cart_product.product.name }}</td>
 
                             <td>
-                                {{ form.quantity }}
+                                {% render_field form.quantity class+="form-control text-end" %}
                                 {{ form.quantity.errors }}
                             </td>
-                            <td>{{ form.DELETE }}</td>
+                            <td class="text-center">{% render_field form.DELETE class+="form-check-input" %}</td>
                         </tr>
                     {% endwith %}
                 {% endfor %}
