@@ -3,22 +3,31 @@
 {% block content %}
     <h2>장바구니</h2>
 
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>상품명</th>
-                <th>수량</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for cart_product in cart_product_list %}
-                <tr>
-                    <td>{{ cart_product.product.name }}</td>
-                    <td>{{ cart_product.quantity }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form action="" method="post" novalidate>
+        <table>
+            <tbody>
+
+                {% csrf_token %}
+                {{ formset.management_form }}
+                {% for form in formset %}
+                    {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+                    {% with form.instance as cart_product %}
+                        <tr>
+                            <td>{{ cart_product.product.name }}</td>
+
+                            <td>
+                                {{ form.quantity }}
+                                {{ form.quantity.errors }}
+                            </td>
+                            <td>{{ form.DELETE }}</td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-primary" value="장바구니 업데이트" />
+    </form>
+
 
     <div class="text-end">
         <a href="#" class="btn btn-primary">주문하기</a>

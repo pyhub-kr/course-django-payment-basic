@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.forms import modelformset_factory
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 
+from mall.forms import CartProductForm
 from mall.models import Product, CartProduct
 
 
@@ -35,11 +37,32 @@ def cart_detail(request):
         .select_related("product")
         .order_by("product__name")
     )
+
+    CartProductFormSet = modelformset_factory(
+        model=CartProduct,
+        form=CartProductForm,
+        can_delete=True,
+    )
+
+    if request.method == "POST":
+        formset = CartProductFormSet(
+            data=request.POST,
+            queryset=cart_product_qs,
+        )
+        if formset.is_valid():
+            formset.save()
+            messages.success(request, "장바구니를 업데이트했습니다.")
+            return redirect("cart_detail")
+    else:
+        formset = CartProductFormSet(
+            queryset=cart_product_qs,
+        )
+
     return render(
         request,
         "mall/cart_detail.html",
         {
-            "cart_product_list": cart_product_qs,
+            "formset": formset,
         },
     )
 
