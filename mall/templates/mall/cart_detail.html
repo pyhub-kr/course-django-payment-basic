@@ -1,0 +1,26 @@
+{% extends "mall/base.html" %}
+
+{% block content %}
+    <h2>장바구니</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>상품명</th>
+                <th>수량</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart_product in cart_product_list %}
+                <tr>
+                    <td>{{ cart_product.product.name }}</td>
+                    <td>{{ cart_product.quantity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <a href="#" class="btn btn-primary">주문하기</a>
+    </div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 
 from mall.models import Product, CartProduct
@@ -24,6 +24,24 @@ class ProductListView(ListView):
 
 
 product_list = ProductListView.as_view()
+
+
+@login_required
+def cart_detail(request):
+    cart_product_qs = (
+        CartProduct.objects.filter(
+            user=request.user,
+        )
+        .select_related("product")
+        .order_by("product__name")
+    )
+    return render(
+        request,
+        "mall/cart_detail.html",
+        {
+            "cart_product_list": cart_product_qs,
+        },
+    )
 
 
 @login_required
