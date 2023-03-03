@@ -3,5 +3,14 @@
 {% block content %}
     <h2>결제</h2>
 
-    {{ order }}
+    {{ payment.name }}
+    <br/>
+    {{ payment.desired_amount }}
+    <br/>
+    {{ payment.pay_method }}
+    <br/>
+    {{ payment.buyer_email }}
+    <br/>
+    {{ payment.buyer_name }}
+    <br/>
 {% endblock %}

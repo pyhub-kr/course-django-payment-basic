@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
 from mall.forms import CartProductForm
-from mall.models import Product, CartProduct, Order
+from mall.models import Product, CartProduct, Order, OrderPayment
 
 
 class ProductListView(ListView):
@@ -111,4 +111,17 @@ def order_new(request):
 def order_pay(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
     messages.warning(request, "구현 예정")
-    return render(request, "mall/order_pay.html", {"order": order})
+
+    if not order.can_pay():
+        messages.error(request, "현재 결제를 할 수 없는 주문입니다.")
+        return redirect("order_detail", order.pk)  # TODO: order_detail 구현
+
+    payment = OrderPayment.create_by_order(order)
+
+    return render(
+        request,
+        "mall/order_pay.html",
+        {
+            "payment": payment,
+        },
+    )
