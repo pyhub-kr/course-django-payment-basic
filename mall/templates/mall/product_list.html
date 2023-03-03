@@ -32,6 +32,6 @@
         {% endfor %}
     </div>
 
-    <div class="mt-3 mb-3">{% bootstrap_pagination page_obj %}</div>
+    <div class="mt-3 mb-3">{% bootstrap_pagination page_obj url=request.get_full_path %}</div>
 
 {% endblock %}
