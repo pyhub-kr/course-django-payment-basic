@@ -23,7 +23,7 @@
                         <div class="d-flex justify-content-between">
                             <div>{{ product.price|intcomma }}원</div>
                             <div>
-                                <a href="#" class="btn btn-primary">장바구니에 담기</a>
+                                <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-primary">장바구니에 담기</a>
                             </div>
                         </div>
                     </div>
