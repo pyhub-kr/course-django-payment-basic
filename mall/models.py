@@ -165,6 +165,9 @@ class Order(models.Model):
 
         return order
 
+    class Meta:
+        ordering = ["-pk"]
+
 
 class OrderedProduct(models.Model):
     order = models.ForeignKey(

@@ -99,6 +99,21 @@ def add_to_cart(request, product_pk):
     return HttpResponse("ok")
 
 
+# Pagination 처리가 필요하시다면 ListView를 사용하세요.
+
+
+@login_required
+def order_list(request):
+    order_qs = Order.objects.all().filter(user=request.user, status=Order.Status.PAID)
+    return render(
+        request,
+        "mall/order_list.html",
+        {
+            "order_list": order_qs,
+        },
+    )
+
+
 @login_required
 def order_new(request):
     cart_product_qs = CartProduct.objects.filter(user=request.user)
