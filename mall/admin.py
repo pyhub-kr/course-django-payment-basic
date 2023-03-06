@@ -1,5 +1,23 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Order
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ["pk", "name", "total_amount", "status"]
+    actions = ["make_cancel", "update"]
+
+    @admin.display(description=f"지정 주문결제를 취소합니다.")
+    def make_cancel(self, request, queryset):
+        for order in queryset:
+            order.cancel("관리자가 주문결제를 취소했습니다.")
+        self.message_user(request, f"{queryset.count()}개의 주문결제를 취소했습니다.")
+
+    @admin.display(description="지정 주문의 결제상황을 업데이트합니다.")
+    def update(self, request, queryset):
+        for order in queryset:
+            order.update()
+        self.message_user(request, f"{queryset.count()}개의 결제상황을 업데이트했습니다.")
 
 
 @admin.register(Category)
