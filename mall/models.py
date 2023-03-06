@@ -7,6 +7,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import UniqueConstraint, QuerySet
 from django.http import Http404
+from django.urls import reverse
 from django.utils.functional import cached_property
 from iamport import Iamport
 
@@ -123,6 +124,9 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self) -> str:
+        return reverse("order_detail", args=[self.pk])
+
     def can_pay(self) -> bool:
         return self.status in (self.Status.REQUESTED, self.Status.FAILED_PAYMENT)
 
@@ -236,6 +240,19 @@ class AbstractPortonePayment(models.Model):
 
 class OrderPayment(AbstractPortonePayment):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, db_constraint=False)
+
+    def update(self):
+        super().update()
+
+        if self.is_paid_ok:
+            self.order.status = Order.Status.PAID
+            self.order.save()
+            # 다수의 결제시도
+            self.order.orderpayment_set.exclude(pk=self.pk).delete()
+
+        elif self.pay_status in (self.PayStatus.CANCELED, self.PayStatus.FAILED):
+            self.order.status = Order.Status.FAILED_PAYMENT
+            self.order.save()
 
     @classmethod
     def create_by_order(cls, order: Order) -> "OrderPayment":

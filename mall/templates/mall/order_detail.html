@@ -1,0 +1,30 @@
+{% extends "mall/base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h2>주문내역</h2>
+    <ul>
+        <li>주문번호: {{ order.uid }}</li>
+        <li>{{ order.total_amount|intcomma }}원</li>
+        <li>{{ order.get_status_display }}</li>
+    </ul>
+
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>주문상품명</th>
+                <th>상품가격</th>
+                <th>주문수량</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ordered_product in order.orderedproduct_set.all %}
+                <tr>
+                    <td>{{ ordered_product.name }}</td>
+                    <td class="text-end">{{ ordered_product.price|intcomma }}</td>
+                    <td class="text-end">{{ ordered_product.quantity|intcomma }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
