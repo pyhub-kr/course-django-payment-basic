@@ -134,12 +134,15 @@ def order_pay(request, pk):
 
     payment = OrderPayment.create_by_order(order)
 
+    check_url = reverse("order_check", args=[order.pk, payment.pk])
+
     payment_props = {
         "merchant_uid": payment.merchant_uid,
         "name": payment.name,
         "amount": payment.desired_amount,
         "buyer_name": payment.buyer_name,
         "buyer_email": payment.buyer_email,
+        "m_redirect_url": request.build_absolute_uri(check_url),
     }
 
     return render(
@@ -148,7 +151,7 @@ def order_pay(request, pk):
         {
             "portone_shop_id": settings.PORTONE_SHOP_ID,
             "payment_props": payment_props,
-            "next_url": reverse("order_check", args=[order.pk, payment.pk]),
+            "next_url": check_url,
         },
     )
 
