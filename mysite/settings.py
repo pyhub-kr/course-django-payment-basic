@@ -42,6 +42,7 @@ SECRET_KEY = env.str(
 DEBUG = env.bool("DEBUG", default=True)  # 1, t, true
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 
 # Application definition
