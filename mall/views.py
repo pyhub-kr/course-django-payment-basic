@@ -187,7 +187,13 @@ def portone_webhook(request):
         merchant_uid = payload.get("merchant_uid")
     else:
         merchant_uid = request.POST.get("merchant_uid")
-    print("request.body :", request.body)
-    print("request.POST :", request.POST)
-    print("merchant_uid :", merchant_uid)
+
+    if not merchant_uid:
+        return HttpResponse("merchant_uid 인자가 누락되었습니다.", status=400)
+    elif merchant_uid == "merchant_1234567890":
+        return HttpResponse("test ok")
+
+    payment = get_object_or_404(OrderPayment, uid=merchant_uid)
+    payment.update()
+
     return HttpResponse("ok")
