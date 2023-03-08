@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -5,6 +7,7 @@ from django.forms import modelformset_factory
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
@@ -174,3 +177,17 @@ def order_detail(request, pk):
             "order": order,
         },
     )
+
+
+@require_POST
+@csrf_exempt
+def portone_webhook(request):
+    if request.META["CONTENT_TYPE"] == "application/json":
+        payload = json.loads(request.body)
+        merchant_uid = payload.get("merchant_uid")
+    else:
+        merchant_uid = request.POST.get("merchant_uid")
+    print("request.body :", request.body)
+    print("request.POST :", request.POST)
+    print("merchant_uid :", merchant_uid)
+    return HttpResponse("ok")

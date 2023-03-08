@@ -15,4 +15,5 @@ urlpatterns = [
         name="order_check",
     ),
     path("orders/<int:pk>/", views.order_detail, name="order_detail"),
+    path("webhook/", views.portone_webhook, name="webhook"),
 ]
