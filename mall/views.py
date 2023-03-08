@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
+from mall.decorators import deny_from_untrusted_hosts
 from mall.forms import CartProductForm
 from mall.models import Product, CartProduct, Order, OrderPayment
 
@@ -181,6 +182,7 @@ def order_detail(request, pk):
 
 @require_POST
 @csrf_exempt
+@deny_from_untrusted_hosts(settings.PORTONE_WEBHOOK_IPS)
 def portone_webhook(request):
     if request.META["CONTENT_TYPE"] == "application/json":
         payload = json.loads(request.body)
