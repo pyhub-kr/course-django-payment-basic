@@ -141,6 +141,7 @@ def order_pay(request, pk):
     check_url = reverse("order_check", args=[order.pk, payment.pk])
 
     payment_props = {
+        "pg": settings.PORTONE_PG,
         "merchant_uid": payment.merchant_uid,
         "name": payment.name,
         "amount": payment.desired_amount,

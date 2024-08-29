@@ -27,6 +27,7 @@ def payment_new(request):
 def payment_pay(request, pk):
     payment = get_object_or_404(Payment, pk=pk)
     payment_props = {
+        "pg": settings.PORTONE_PG,
         "merchant_uid": payment.merchant_uid,
         "name": payment.name,
         "amount": payment.amount,

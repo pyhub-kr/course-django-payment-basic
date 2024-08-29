@@ -169,7 +169,12 @@ INTERNAL_IPS = env.list("INTERNAL_IPS", default=["127.0.0.1"])
 
 
 # 포트원
+PORTONE_PG_PROVIDER = env.str("PORTONE_PG_PROVIDER", default="")
 PORTONE_SHOP_ID = env.str("PORTONE_SHOP_ID", default="")
+# 포트원 측에서 권장한 포맷이었으나 PG 설정 오류가 발생하여
+# PG PROVIDER 값만 활용
+# PORTONE_PG = f"{PORTONE_PG_PROVIDER}.{PORTONE_SHOP_ID}"
+PORTONE_PG = PORTONE_PG_PROVIDER
 PORTONE_API_KEY = env.str("PORTONE_API_KEY", default="")
 PORTONE_API_SECRET = env.str("PORTONE_API_SECRET", default="")
 
