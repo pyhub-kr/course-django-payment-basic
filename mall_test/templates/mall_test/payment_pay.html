@@ -16,6 +16,9 @@
         const props = JSON.parse(json_string);
 
         IMP.request_pay(props, function(response) {
+            if(response.error_msg) {
+                alert(`${response.error_msg} (${response.error_code})`);
+            }
             location.href = window.PAYMENT_CHECK_URL;
         });
     })();
